@@ -5,7 +5,7 @@ import CommentPost from "./CommentPost";
 import Delete from "./Delete";
 
 const Post = ({ post, user }) => {
-  const [isEdit, setIsEdit] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const [editMess, setEditMess] = useState(null);
   const dispatch = useDispatch();
 
@@ -20,9 +20,12 @@ const Post = ({ post, user }) => {
       return `il y a ${days} days  jours`;
     }
   };
+  const editing = () => {
+    setToggle(!toggle);
+  };
 
   const handleEdit = () => {
-    setIsEdit(false);
+    setToggle(false);
 
     if (editMess) {
       dispatch(
@@ -46,21 +49,21 @@ const Post = ({ post, user }) => {
         </div>
         {post.authorId === user?.uid && (
           <div className="right-part">
-            <span onClick={() => setIsEdit(!isEdit)}>
+            <span onClick={editing}>
               <i className="fa-solid fa-pen-to-square"></i>
             </span>
             <Delete postId={post.id} />
           </div>
         )}
       </div>
-      {isEdit ? (
+      {toggle ? (
         <>
           <textarea
             autoFocus
             defaultValue={editMess ? editMess : post.message}
             onChange={(e) => setEditMess(e.target.value)}
           ></textarea>
-          <button className="edit-btn" onClick={() => handleEdit()}>
+          <button className="edit-btn" onClick={handleEdit}>
             Modifier message
           </button>
         </>
