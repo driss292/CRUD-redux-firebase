@@ -5,7 +5,7 @@ import CommentPost from "./CommentPost";
 import Delete from "./Delete";
 
 const Post = ({ post, user }) => {
-  const [edit, setEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [editMess, setEditMess] = useState(null);
   const dispatch = useDispatch();
 
@@ -17,12 +17,12 @@ const Post = ({ post, user }) => {
     } else if (days === 1) {
       return "il y a 1 jour";
     } else {
-      return "il y a " + days + " jours";
+      return `il y a ${days} days  jours`;
     }
   };
 
   const handleEdit = () => {
-    setEdit(false);
+    setIsEdit(false);
 
     if (editMess) {
       dispatch(
@@ -46,14 +46,14 @@ const Post = ({ post, user }) => {
         </div>
         {post.authorId === user?.uid && (
           <div className="right-part">
-            <span onClick={() => setEdit(!edit)}>
+            <span onClick={() => setIsEdit(!isEdit)}>
               <i className="fa-solid fa-pen-to-square"></i>
             </span>
             <Delete postId={post.id} />
           </div>
         )}
       </div>
-      {edit ? (
+      {isEdit ? (
         <>
           <textarea
             autoFocus
